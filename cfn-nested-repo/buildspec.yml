@@ -1,4 +1,4 @@
-version: 0.1
+version: 0.2
 
 environment_variables:
   plaintext:
@@ -18,6 +18,8 @@ environment_variables:
 
 phases:
   install:
+    runtime-versions:
+      nodejs: 8
     commands:
       npm install jsonlint -g
   pre_build:

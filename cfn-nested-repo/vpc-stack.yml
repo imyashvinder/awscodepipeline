@@ -150,12 +150,20 @@ Resources:
     Type: "AWS::EC2::EIP"
     Properties:
       Domain: vpc
+      Tags:
+        - Key: Name
+          Value:
+            Fn::Sub: ${TagPrefix}-EIP1
     DependsOn: GatewayToInternet
 
   NATEIP2:
     Type: "AWS::EC2::EIP"
     Properties:
       Domain: vpc
+      Tags:
+        - Key: Name
+          Value:
+            Fn::Sub: ${TagPrefix}-EIP2
     DependsOn: GatewayToInternet
 
   NAT1:
@@ -165,6 +173,10 @@ Resources:
         Fn::GetAtt: [ NATEIP1, AllocationId ]
       SubnetId:
         Ref: PubSubnet1
+      Tags:
+        - Key: Name
+          Value:
+            Fn::Sub: ${TagPrefix}-NAT1
 
   NAT2:
     Type: "AWS::EC2::NatGateway"
@@ -173,6 +185,10 @@ Resources:
         Fn::GetAtt: [ NATEIP2, AllocationId ]
       SubnetId:
         Ref: PubSubnet2
+      Tags:
+        - Key: Name
+          Value:
+            Fn::Sub: ${TagPrefix}-NAT2
 
   PublicRouteTable:
     Type: "AWS::EC2::RouteTable"

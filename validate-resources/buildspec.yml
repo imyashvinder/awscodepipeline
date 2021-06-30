@@ -1,4 +1,4 @@
-version: 0.1
+version: 0.2
 
 environment_variables:
   plaintext:
@@ -6,11 +6,15 @@ environment_variables:
 
 phases:
   install:
+    runtime-versions:
+      python: 3.7
     commands:
       - pip install --upgrade pip
-      - pip install boto3 --upgrade
-      - pip install pyyaml --upgrade
-      - pip install yamllint --upgrade
+      - pip install --upgrade typing
+      - pip install --upgrade awscli
+      - pip install --upgrade boto3 
+      - pip install --upgrade pyyaml 
+      - pip install --upgrade yamllint
   pre_build:
     commands:
       - echo "Validating config file $CONFIG_FILE"

@@ -21,11 +21,11 @@
   },
   {
   "ParameterKey": "UATApprovalEmail",
-  "ParameterValue": "example@example.com"
+  "ParameterValue": "yashvinder.edx@gmail.com"
   },
   {
   "ParameterKey": "ProdApprovalEmail",
-  "ParameterValue": "example@example.com"
+  "ParameterValue": "yashvinder.edx@gmail.com"
   },
   {
   "ParameterKey": "TagPrefix",

@@ -9,10 +9,10 @@ with open('env-details.yml', 'r') as f:
 flag = False
 
 try:
-    for cmd, props in doc.iteritems():
+    for cmd, props in doc.items():
         if cmd == 'describe_security_groups':
-            print 'Checking Security group ' + props['Name']
-            ec2 = boto3.client('ec2', region_name='eu-west-1')
+            print ('Checking Security group ' + props['Name'])
+            ec2 = boto3.client('ec2', region_name='ap-south-1')
             sg_res = ec2.describe_security_groups(Filters=[{'Name': 'group-name',
                                                             'Values': ['*' + props['Name'] + '*']}])
             sg_perms = sg_res['SecurityGroups'][0]['IpPermissions'][0]
@@ -24,7 +24,7 @@ try:
             else:
                 continue
         if cmd == 'get_role':
-            print 'Checking role ' + props['Name']
+            print ('Checking role ' + props['Name'])
             iam = boto3.client('iam', region_name='us-east-1')
             role_res = iam.get_role(RoleName=props['Name'])
             role_perms = role_res['Role']['AssumeRolePolicyDocument']['Statement'][0]
@@ -36,8 +36,8 @@ try:
             else:
                 continue
         if cmd == 'describe_load_balancers':
-            print 'Checking ELB ' + props['Name']
-            elb = boto3.client('elb', region_name='eu-west-1')
+            print ('Checking ELB ' + props['Name'])
+            elb = boto3.client('elb', region_name='ap-south-1')
             elb_res = elb.describe_load_balancers()
             for lbs in elb_res['LoadBalancerDescriptions']:
                 if props['Name'] in lbs['LoadBalancerName']:
@@ -49,14 +49,14 @@ try:
                elb_lstr['InstancePort'] != props_elb['InstancePort'] or \
                elb_lstr['LoadBalancerPort'] != props_elb['LoadBalancerPort'] or \
                elb_lstr['Protocol'] != props_elb['Protocol']:
-                print elb_lstr
-                print props_elb
+                print (elb_lstr)
+                print (props_elb)
                 sys.exit(-1)
             else:
                 continue
         if cmd == 'describe_launch_configurations':
-            print 'Checking Launch Configuration ' + props['Name']
-            asg = boto3.client('autoscaling', region_name='eu-west-1')
+            print ('Checking Launch Configuration ' + props['Name'])
+            asg = boto3.client('autoscaling', region_name='ap-south-1')
             lc_res = asg.describe_launch_configurations()
             for lcs in lc_res['LaunchConfigurations']:
                 if props['Name'] in lcs['LaunchConfigurationName']:
@@ -70,8 +70,8 @@ try:
             else:
                 continue
         if cmd == 'describe_auto_scaling_groups':
-            print 'Checking Auto Scaling group ' + props['Name']
-            asg = boto3.client('autoscaling', region_name='eu-west-1')
+            print ('Checking Auto Scaling group ' + props['Name'])
+            asg = boto3.client('autoscaling', region_name='ap-south-1')
             asg_res = asg.describe_auto_scaling_groups()
             for asgs in asg_res['AutoScalingGroups']:
                 for tag in asgs['Tags']:
@@ -87,12 +87,12 @@ try:
                asg_config['MinSize'] != props_asg['MinSize'] or \
                asg_config['MaxSize'] != props_asg['MaxSize'] or \
                props_asg['LoadBalancerNames'] not in asg_config['LoadBalancerNames'][0]:
-                print asg_config
-                print props_asg
+                print (asg_config)
+                print (props_asg)
                 sys.exit(-1)
             else:
                 continue
 except:
-    print 'Failed'
+    print ('Failed')
     traceback.print_exc()
     sys.exit(-1)
